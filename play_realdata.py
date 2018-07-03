@@ -37,5 +37,7 @@ res = optimize.minimize(ddm.ddm_pdf, np.array([0.0015, 0.03]), args=(real_data.a
 
 for i in range(len(coherence_values)-1):
     real_data = tdata[tdata[:,0] == coherence_values[i+1], 4]
-    res = optimize.minimize(ddm.ddm_pdf, np.array([0.0015, 0.03]), args=(real_data.astype(np.int)), method = 'Nelder-Mead', tol=0.00005, options={'maxiter':200})
+    res = optimize.minimize(ddm.ddm_pdf, np.array([0.0015, 0.05]), args=(real_data.astype(np.int)), method = 'Nelder-Mead', tol=0.000005, options={'maxiter':200})
+    print(coherence_values[i+1], res.x)
+    
     
