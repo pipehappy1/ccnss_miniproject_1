@@ -7,8 +7,10 @@ def ddm_pdf(params, data):
     sigma = params[1]
     ddm1 = DDM(mu, sigma)
 
+    n = len(data)
+
     rt_pdf = ddm1.pdf_by_sampling()
-    return np.sum(-np.log(rt_pdf[data] + 0.0001))
+    return np.sum(-np.log(rt_pdf[data] + 0.0001))/n
     
     
 
