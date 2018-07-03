@@ -3,7 +3,7 @@ from scipy.ndimage import filters
 
 
 def ddm_pdf(params, data):
-    mu = params[0]
+    mu = params[0]/1000
     sigma = params[1]
     ddm1 = DDM(mu, sigma)
 
@@ -15,7 +15,7 @@ def ddm_pdf(params, data):
     
 
 class DDM:
-    def __init__(self, mu=0.0015, sigma=0.05):
+    def __init__(self, mu=0.015, sigma=0.05):
         self.bias = 0
         self.mu = mu
         self.sigma = sigma
@@ -46,7 +46,7 @@ class DDM:
     def get_both_rt(self, unconstrained_samples):
         rt_p, rt_n, trail_p, trail_n, rt_p_only, rt_n_only = self.get_rt(unconstrained_samples)
 
-        return rt_p*trail_p + rt_n*trail_n
+        return np.concatenate((rt_p_only, rt_n_only))
 
     def sample(self, trails=150, sample_length=400):
         all_increment = self.unconstrained_sample(trails, sample_length)
