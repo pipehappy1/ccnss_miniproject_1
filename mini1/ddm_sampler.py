@@ -8,8 +8,7 @@ def ddm_pdf(params, data):
     ddm1 = DDM(mu, sigma)
 
     rt_pdf = ddm1.pdf_by_sampling()
-
-    rt_pdf[]
+    return np.sum(-np.log(rt_pdf[data]))
     
     
 
@@ -21,7 +20,7 @@ class DDM:
         self.Bp = 1
         self.Bn = -1
 
-    def unconstrained_sample(self, trails, sample_length=2000):
+    def unconstrained_sample(self, trails, sample_length=400):
         all_random = np.random.normal(self.mu, self.sigma, (trails, sample_length))
 
         all_increment = np.dot(all_random, np.triu(np.ones((sample_length, sample_length))))
@@ -46,6 +45,12 @@ class DDM:
         rt_p, rt_n, trail_p, trail_n, rt_p_only, rt_n_only = self.get_rt(unconstrained_samples)
 
         return rt_p*trail_p + rt_n*trail_n
+
+    def sample(self, trails=150, sample_length=400):
+        all_increment = self.unconstrained_sample(trails, sample_length)
+        rt = self.get_both_rt(all_increment)
+
+        return rt
 
     def pdf_by_sampling(self, trails=15000, sample_length=400):
         all_increment = self.unconstrained_sample(trails)
