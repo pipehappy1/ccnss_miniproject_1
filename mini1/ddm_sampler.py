@@ -8,7 +8,7 @@ def ddm_pdf(params, data):
     ddm1 = DDM(mu, sigma)
 
     rt_pdf = ddm1.pdf_by_sampling()
-    return np.sum(-np.log(rt_pdf[data]))
+    return np.sum(-np.log(rt_pdf[data] + 0.0001))
     
     
 
@@ -52,7 +52,7 @@ class DDM:
 
         return rt
 
-    def pdf_by_sampling(self, trails=15000, sample_length=400):
+    def pdf_by_sampling(self, trails=15000, sample_length=450):
         all_increment = self.unconstrained_sample(trails)
         rt = self.get_both_rt(all_increment)
 
