@@ -12,17 +12,22 @@ scalar_rt = tdata[:,4]/10
 tdata[:,4] = scalar_rt.astype(np.int)
 coherence_values = np.unique(tdata[:,0])
 
+
+#values = []
+#for i in range(len(coherence_values)):
+#    values.append(np.sum((tdata[:,0] == coherence_values[i])* (tdata[:,3] == 1)) / np.sum(tdata[:,0] == coherence_values[i]))
+#
+#values[0] = np.sum((tdata[:,0]== 0)* (tdata[:,2]== 2)) / (np.sum((tdata[:,0]== 0)* (tdata[:,2]== 2)) + np.sum((tdata[:,0]== 0)* (tdata[:,2]== 3)))
+#
+#
+#plt.plot(values)
+#plt.show()
+
+
 values = []
-for i in range(len(coherence_values)):
-    values.append(np.sum((tdata[:,0] == coherence_values[i])* (tdata[:,3] == 1)) / np.sum(tdata[:,0] == coherence_values[i]))
-
-values[0] = np.sum((tdata[:,0]== 0)* (tdata[:,2]== 2)) / (np.sum((tdata[:,0]== 0)* (tdata[:,2]== 2)) + np.sum((tdata[:,0]== 0)* (tdata[:,2]== 3)))
-
-
-plt.plot(values)
-plt.show()
-
-
-
-
+for i in range(len(coherence_values)-1):
+    v = tdata[tdata[:,0] == coherence_values[i+1], 4]
+    plt.figure()
+    plt.hist(v, bins=50)
+    plt.savefig('pc_' + str(i) + '.jpg')
 
